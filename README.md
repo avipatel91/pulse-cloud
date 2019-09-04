@@ -105,7 +105,8 @@ git rebase -i develop
 
 9. Select your commit message and address any conflicts that might arise.
 
-10. Push your branch to GitHub.
+10. Push your branch to GitHub. If you already pushed commits before rebase and are pushing the rebased version,
+    then append the following flag: --force-with-lease.
 ```bash
 git push origin example-feature
 ```
