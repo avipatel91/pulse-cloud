@@ -2,6 +2,9 @@
   "name": "pulse-cloud",
   "version": "1.0.0",
   "description": "",
+  "engines" : {
+    "node": ">=12.8.0"
+  },
   "main": "",
   "scripts": {
     "start": "nodemon ./dist/index.js",
