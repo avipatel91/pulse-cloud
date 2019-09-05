@@ -35,7 +35,6 @@ npm install -g nodemon
 ```
 
 8. Compile TS code in JS and watch for changes. This process will run in the foreground indefinitely, as long as the terminal session isn't closed.
-
 ```bash
 tsc -w
 ```
