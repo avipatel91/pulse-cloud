@@ -5,7 +5,7 @@ providing member and classroom data for mobile and dashboard.
 
 ## Installation
 
-1. Fork pulse-cloud respository. Click fork button on top-right of repository page on Github.
+1. Fork pulse-cloud repository. Click fork button on top-right of repository page on Github.
 ![Fork Image](/images/fork.png)
 
 
