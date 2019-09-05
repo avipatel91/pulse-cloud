@@ -40,12 +40,12 @@ npm install -g nodemon
 tsc -w
 ```
 
-7. Open a new terminal and go to pulse-server directory. Start server by running npm start script. This will run nodemon on `/src` directory.
+7. Open a new terminal and go to pulse-server directory. Start server by running npm start script. This will run nodemon on `/dist` directory.
 ```bash
 npm start
 ```
 
-Any changes made to TS files in `/dist` will be picked up by the TypeScript compiler and transcompiled and outputted to `/src`. Nodemon will pick up the changes in `/src` and restart the server.
+Any changes made to TS files in `/src` will be picked up by the TypeScript compiler and transcompiled and outputted to `/dist`. Nodemon will pick up the changes in `/dist` and restart the server.
 
 ### Contributing
 
