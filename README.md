@@ -40,7 +40,6 @@ tsc -w
 ```
 
 7. Open a new terminal and go to pulse-server directory. Start server by running npm start script. This will run nodemon on `/dist` directory.
-```bash
 npm start
 ```
 
