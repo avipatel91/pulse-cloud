@@ -46,6 +46,42 @@ npm start
 
 Any changes made to TS files in `/src` will be picked up by the TypeScript compiler and transcompiled and outputted to `/dist`. Nodemon will pick up the changes in `/dist` and restart the server.
 
+
+## Authentication
+
+Authentication is handed off to Firebase. In order to utilize Firebase SDK, you will need to provide service account key.
+This is done by exporting the path of the service account file (JSON) as an environment variable.
+
+1. Request service account key from project owner (Avi).
+
+2. Copy absolute path of the file location.
+
+3. Copy path into GOOGLE_APPLICATION_CREDENTIALS environment variable in .env file (project root).
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/file"
+```
+4. Source the environment variable.
+```bash
+source .env
+```
+
+5. Authentication middleware is ran on `prod` and `start` npm scripts.
+```bash
+npm run prod
+```
+or
+```bash
+npm start
+```
+
+To ignore authentication run `dev`.
+```bash
+npm run dev
+```
+
+## Database
+
+
 ### Contributing
 
 All changes will be merged into development.
