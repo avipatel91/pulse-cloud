@@ -40,9 +40,9 @@ npm install -g nodemon
 tsc -w
 ```
 
-7. Open a new terminal and go to pulse-server directory. Start server by running npm start script. This will run nodemon on `/dist` directory.
+7. Open a new terminal and go to pulse-server directory. Start server by running npm run script. This will run nodemon on `/dist` directory in development mode.
 ```bash
-npm start
+npm run dev
 ```
 Any changes made to TS files in `/src` will be picked up by the TypeScript compiler and transcompiled and outputted to `/dist`. Nodemon will pick up the changes in `/dist` and restart the server.
 
@@ -56,16 +56,22 @@ This is done by exporting the path of the service account file (JSON) as an envi
 
 2. Copy absolute path of the file location.
 
-3. Copy path into GOOGLE_APPLICATION_CREDENTIALS environment variable in .env file (project root).
+3. Copy `.env` to project root. We do this to prevent git from picking up changes. From project root:
+```bash
+cp configs/.env .
+```
+
+4. Take the path from step 2 and paste it into GOOGLE_APPLICATION_CREDENTIALS environment variable `.env` file.
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="path/to/file"
 ```
-4. Source the environment variable.
+
+5. Source the environment variable.
 ```bash
 source .env
 ```
 
-5. Authentication middleware is ran on `prod` and `start` npm scripts.
+6. Authentication middleware is ran on `prod` and `start` npm scripts.
 ```bash
 npm run prod
 ```
@@ -84,8 +90,14 @@ npm run dev
 
 Currently, development is done using a database server from DigitalOcean.
 In order to connect to the database, your IP needs to be whitelisted. Provide the project owner with your IPv4.
-Credentials will be needed to connect to the database. Request the credentials from the project owner.
-You will need to fill in `username`, `password`, and `database` in ormconfig.json.
+Credentials will be needed to connect to the database.
+
+1. TypeORM library expects ormconfig.json in project root. Copy it over from configs to project root:
+```bash
+cp configs/ormconfig.json .
+```
+
+2. Request the credentials from the project owner. You will need to fill in `username`, `password`, and `database` in ormconfig.json.
 
 
 ## Contributing

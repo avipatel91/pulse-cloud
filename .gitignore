@@ -1,5 +1,5 @@
 node_modules
 dist
-.env
-ormconfig.json
+/.env
+/ormconfig.json
 .vscode
