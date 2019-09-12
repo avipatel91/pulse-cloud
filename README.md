@@ -88,7 +88,7 @@ Credentials will be needed to connect to the database. Request the credentials f
 You will need to fill in `username`, `password`, and `database` in ormconfig.json.
 
 
-### Contributing
+## Contributing
 
 All changes will be merged into development.
 
