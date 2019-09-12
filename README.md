@@ -3,6 +3,7 @@
 Pulse-Cloud is an API server for collecting wearable analytics,
 providing member and classroom data for mobile and dashboard.
 
+
 ## Installation
 
 1. Fork pulse-cloud repository. Click fork button on top-right of repository page on Github.
@@ -43,7 +44,6 @@ tsc -w
 ```bash
 npm start
 ```
-
 Any changes made to TS files in `/src` will be picked up by the TypeScript compiler and transcompiled and outputted to `/dist`. Nodemon will pick up the changes in `/dist` and restart the server.
 
 
@@ -79,13 +79,18 @@ To ignore authentication run `dev`.
 npm run dev
 ```
 
+
 ## Database
+
+Currently, development is done using a database server from DigitalOcean.
+In order to connect to the database, your IP needs to be whitelisted. Provide the project owner with your IPv4.
+Credentials will be needed to connect to the database. Request the credentials from the project owner.
+You will need to fill in `username`, `password`, and `database` in ormconfig.json.
 
 
 ### Contributing
 
 All changes will be merged into development.
-
 
 1. Track my repo as upstream.
 ```bash
