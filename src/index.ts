@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import bodyParser from 'body-parser'
 import apiRouter from './routes'
 import {
@@ -17,6 +18,7 @@ admin.initializeApp({
 
 const app = express()
 app.use(bodyParser.json())
+app.use(cors())
 
 if (['development', 'debug'].indexOf(process.env.NODE_ENV as string) == -1) {
   app.use(authenticate)
@@ -28,8 +30,8 @@ app.use(handleDefaultError)
 
 async function startServer(): Promise<void> {
   await createConnection()
-  app.listen(3000, () => {
-    console.log('Server running on port 3000')
+  app.listen(8080, () => {
+    console.log('Server running on port 8080')
   })
 }
 
