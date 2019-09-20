@@ -8,11 +8,11 @@ const router = express.Router()
 
 const ensureMemberExistence: RequestHandler = async (req, res, next) => {
   const memberRepository = getRepository(Member)
-  const { memberId } = req.body
-  if (!memberId) {
+  const { id } = req.body
+  if (!id) {
     throw new BadRequestError('Provide memberId')
   }
-  req.member = await memberRepository.findOneOrFail(memberId).catch(() => {
+  req.member = await memberRepository.findOneOrFail(id).catch(() => {
     throw new BadRequestError('Member does not exist')
   })
 
@@ -29,21 +29,15 @@ const ensureHeartRate: RequestHandler = async (req, res, next) => {
 
 const setAverageHeartRate: RequestHandler = async (req, res) => {
   const memberRepository = getRepository(Member)
-  let { averageHeartRate: hrt } = req.member!
-  const newCount = ++hrt.count
-  const newAverageHeartRate =
-    (hrt.averageHeartRate + req.body.heartRate) / newCount
-  hrt = {
-    averageHeartRate: newAverageHeartRate,
-    count: newCount,
-  }
+  const { heartRates } = req.member!
+  heartRates.push(req.body.heartRate)
   await memberRepository.update(req.member!.id, {
-    averageHeartRate: hrt,
+    heartRates,
   })
   res.sendStatus(200)
 }
 
-router.put('/', [
+router.post('/', [
   wrapAsync(ensureMemberExistence),
   wrapAsync(ensureHeartRate),
   wrapAsync(setAverageHeartRate),

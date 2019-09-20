@@ -1,10 +1,5 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm'
 
-export interface AverageHeartRate {
-  count: number
-  averageHeartRate: number
-}
-
 @Entity()
 export class Member {
   @PrimaryColumn({ type: 'char', length: 28, unique: true })
@@ -17,5 +12,5 @@ export class Member {
   lastName!: string
 
   @Column({ type: 'jsonb' })
-  averageHeartRate!: AverageHeartRate
+  heartRates!: number[]
 }
