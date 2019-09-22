@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -12,4 +12,4 @@ jobs:
     - name: Lint code
       uses: stefanoeb/eslint-action@1.0.0
       with:
-        args: "index.ts src/**.ts"
+        args: "src/**.ts"
