@@ -3,9 +3,10 @@
 Pulse-Cloud is an API server for collecting wearable analytics,
 providing member and classroom data for mobile and dashboard.
 
+
 ## Installation
 
-1. Fork pulse-cloud respository. Click fork button on top-right of repository page on Github.
+1. Fork pulse-cloud repository. Click fork button on top-right of repository page on Github.
 ![Fork Image](/images/fork.png)
 
 
@@ -35,22 +36,73 @@ npm install -g nodemon
 ```
 
 8. Compile TS code in JS and watch for changes. This process will run in the foreground indefinitely, as long as the terminal session isn't closed.
-
 ```bash
 tsc -w
 ```
 
-7. Open a new terminal and go to pulse-server directory. Start server by running npm start script. This will run nodemon on `/src` directory.
+7. Open a new terminal and go to pulse-server directory. Start server by running npm run script. This will run nodemon on `/dist` directory in development mode.
+```bash
+npm run dev
+```
+Any changes made to TS files in `/src` will be picked up by the TypeScript compiler and transcompiled and outputted to `/dist`. Nodemon will pick up the changes in `/dist` and restart the server.
+
+
+## Authentication
+
+Authentication is handed off to Firebase. In order to utilize Firebase SDK, you will need to provide service account key.
+This is done by exporting the path of the service account file (JSON) as an environment variable.
+
+1. Request service account key from project owner (Avi).
+
+2. Copy absolute path of the file location.
+
+3. Copy `.env` to project root. We do this to prevent git from picking up changes. From project root:
+```bash
+cp configs/.env .
+```
+
+4. Take the path from step 2 and paste it into GOOGLE_APPLICATION_CREDENTIALS environment variable `.env` file.
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/file"
+```
+
+5. Source the environment variable.
+```bash
+source .env
+```
+
+6. Authentication middleware is ran on `prod` and `start` npm scripts.
+```bash
+npm run prod
+```
+or
 ```bash
 npm start
 ```
 
-Any changes made to TS files in `/dist` will be picked up by the TypeScript compiler and transcompiled and outputted to `/src`. Nodemon will pick up the changes in `/src` and restart the server.
+To ignore authentication run `dev`.
+```bash
+npm run dev
+```
 
-### Contributing
+
+## Database
+
+Currently, development is done using a database server from DigitalOcean.
+In order to connect to the database, your IP needs to be whitelisted. Provide the project owner with your IPv4.
+Credentials will be needed to connect to the database.
+
+1. TypeORM library expects ormconfig.json in project root. Copy it over from configs to project root:
+```bash
+cp configs/ormconfig.json .
+```
+
+2. Request the credentials from the project owner. You will need to fill in `username`, `password`, and `database` in ormconfig.json.
+
+
+## Contributing
 
 All changes will be merged into development.
-
 
 1. Track my repo as upstream.
 ```bash

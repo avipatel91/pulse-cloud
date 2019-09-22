@@ -1,0 +1,14 @@
+{
+  "type": "postgres",
+  "host": "db-postgresql-sfo2-64141-do-user-1342782-0.db.ondigitalocean.com",
+  "port": 25060,
+  "username": "",
+  "password": "",
+  "database": "",
+  "entities": ["dist/entity/*.js"],
+  "migrations": ["dist/migration/*.js"],
+  "cli": {
+    "migrationsDir": "src/migration"
+  },
+  "ssl": true
+}
