@@ -37,10 +37,36 @@ const setAverageHeartRate: RequestHandler = async (req, res) => {
   res.sendStatus(200)
 }
 
+const getAverageHeartRates: RequestHandler = async (req, res) => {
+  const memberRepository = getRepository(Member)
+  const members = await memberRepository.find()
+
+  const retMembers = []
+  for (const currMember of members) {
+    let sum = 0
+    const currRates = currMember['heartRates']
+    for (const heartRate of currRates) {
+      sum += heartRate
+    }
+    const numRates = Math.max(1, currRates.length)
+    const calcAverageHeartRate = Math.floor(sum / numRates)
+
+    retMembers.push({
+      firstName: currMember['firstName'],
+      id: currMember['id'],
+      averageHeartRate: calcAverageHeartRate,
+    })
+  }
+
+  res.send(retMembers)
+}
+
 router.post('/', [
   wrapAsync(ensureMemberExistence),
   wrapAsync(ensureHeartRate),
   wrapAsync(setAverageHeartRate),
 ])
+
+router.get('/', getAverageHeartRates)
 
 export default router
