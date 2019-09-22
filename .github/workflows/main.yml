@@ -10,6 +10,5 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Lint code
-      uses: gimenete/eslint-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: stefanoeb/eslint-action@1.0.0
+      args: "index.ts src/**.ts"
