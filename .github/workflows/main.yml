@@ -11,4 +11,5 @@ jobs:
     - uses: actions/checkout@master
     - name: Lint code
       uses: stefanoeb/eslint-action@1.0.0
-      args: "index.ts src/**.ts"
+      with:
+        args: "index.ts src/**.ts"
