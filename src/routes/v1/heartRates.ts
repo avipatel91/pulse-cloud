@@ -27,12 +27,13 @@ const ensureHeartRate: RequestHandler = async (req, res, next) => {
   next()
 }
 
-const setAverageHeartRate: RequestHandler = async (req, res) => {
+const addHeartRate: RequestHandler = async (req, res) => {
   const memberRepository = getRepository(Member)
-  const { heartRates } = req.member!
-  heartRates.push(req.body.heartRate)
+  const { heartRateRunningTotal } = req.member!
+  heartRateRunningTotal.sum += req.body.heartRate
+  heartRateRunningTotal.count++
   await memberRepository.update(req.member!.id, {
-    heartRates,
+    heartRateRunningTotal,
   })
   res.sendStatus(200)
 }
@@ -43,13 +44,11 @@ const getAverageHeartRates: RequestHandler = async (req, res) => {
 
   const retMembers = []
   for (const currMember of members) {
-    let sum = 0
-    const currRates = currMember['heartRates']
-    for (const heartRate of currRates) {
-      sum += heartRate
-    }
-    const numRates = Math.max(1, currRates.length)
-    const calcAverageHeartRate = Math.floor(sum / numRates)
+    const { heartRateRunningTotal } = currMember
+    const numRates = Math.max(1, heartRateRunningTotal.count)
+    const calcAverageHeartRate = Math.floor(
+      heartRateRunningTotal.sum / numRates,
+    )
 
     retMembers.push({
       firstName: currMember['firstName'],
@@ -64,7 +63,7 @@ const getAverageHeartRates: RequestHandler = async (req, res) => {
 router.post('/', [
   wrapAsync(ensureMemberExistence),
   wrapAsync(ensureHeartRate),
-  wrapAsync(setAverageHeartRate),
+  wrapAsync(addHeartRate),
 ])
 
 router.get('/', getAverageHeartRates)

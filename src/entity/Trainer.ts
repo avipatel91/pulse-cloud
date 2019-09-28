@@ -1,8 +1,8 @@
-import { Entity, PrimaryColumn, Column, ManyToMany, JoinTable } from 'typeorm'
+import { Entity, PrimaryColumn, Column, OneToMany } from 'typeorm'
 import { Session } from './Session'
 
 @Entity()
-export class Member {
+export class Trainer {
   @PrimaryColumn({ type: 'char', length: 28, unique: true })
   id!: string
 
@@ -21,7 +21,6 @@ export class Member {
   @Column({ type: 'varchar', length: 15 })
   userType!: string
 
-  @ManyToMany(() => Session, (session: Session) => session.members)
-  @JoinTable()
+  @OneToMany(() => Session, (session: Session) => session.trainer)
   sessions!: Session[]
 }

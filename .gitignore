@@ -3,3 +3,5 @@ dist
 /.env
 /ormconfig.json
 .vscode
+.DS_STORE
+images/.DS_STORE
