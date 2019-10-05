@@ -8,6 +8,7 @@ import {
   handleDefaultError,
 } from './middlewares/errorHandlers'
 import { authenticate } from './middlewares/auth'
+import { addCustomClaims } from './utils/customClaims'
 import { createConnection } from 'typeorm'
 import admin from 'firebase-admin'
 
@@ -20,9 +21,10 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 
-if (['development', 'debug'].indexOf(process.env.NODE_ENV as string) == -1) {
+if ('development' !== process.env.NODE_ENV) {
   app.use(authenticate)
 }
+
 app.use(apiRouter)
 app.use(handleAuthError)
 app.use(handleBadRequestError)
@@ -30,6 +32,7 @@ app.use(handleDefaultError)
 
 async function startServer(): Promise<void> {
   await createConnection()
+  await addCustomClaims()
   app.listen(8080, () => {
     console.log('Server running on port 8080')
   })

@@ -1,6 +1,10 @@
 declare namespace Express {
-  export interface Request {
-    token?: import('firebase-admin').auth.DecodedIdToken
+  interface User {
+    id: string
+    type: string
+  }
+  interface Request {
+    user?: User
     member?: import('../../src/entity/Member').Member
   }
 }

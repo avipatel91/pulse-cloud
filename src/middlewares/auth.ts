@@ -17,7 +17,12 @@ export const authenticate: RequestHandler = wrappedAsync(
   async (req, res, next) => {
     const idToken = retrieveToken(req)
     try {
-      req.token = await admin.auth().verifyIdToken(idToken)
+      const claims = await admin.auth().verifyIdToken(idToken)
+      if (!claims.type) throw new Error()
+      req.user = {
+        id: claims.uid,
+        type: claims.type,
+      }
     } catch (e) {
       throw new AuthError('Unauthorized')
     }
