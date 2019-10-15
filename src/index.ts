@@ -6,6 +6,7 @@ import {
   handleAuthError,
   handleBadRequestError,
   handleDefaultError,
+  handleForbiddenError,
 } from './middlewares/errorHandlers'
 import { authenticate } from './middlewares/auth'
 import { addCustomClaims } from './utils/customClaims'
@@ -29,6 +30,7 @@ app.use(apiRouter)
 app.use(handleAuthError)
 app.use(handleBadRequestError)
 app.use(handleDefaultError)
+app.use(handleForbiddenError)
 
 async function startServer(): Promise<void> {
   await createConnection()
