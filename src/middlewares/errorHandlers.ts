@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { AuthError, BadRequestError } from '../common/Errors'
+import { AuthError, BadRequestError, ForbiddenError } from '../common/Errors'
 
 function handleAuthError(
   error: Error,
@@ -23,6 +23,17 @@ function handleBadRequestError(
   } else next(error)
 }
 
+function handleForbiddenError(
+  error: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
+  if (error instanceof ForbiddenError) {
+    res.status(403).send(error.message)
+  } else next(error)
+}
+
 function handleDefaultError(
   error: Error,
   req: Request,
@@ -33,4 +44,9 @@ function handleDefaultError(
   res.status(400).send(error.message)
 }
 
-export { handleAuthError, handleBadRequestError, handleDefaultError }
+export {
+  handleAuthError,
+  handleBadRequestError,
+  handleDefaultError,
+  handleForbiddenError,
+}
