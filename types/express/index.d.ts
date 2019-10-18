@@ -4,7 +4,10 @@ declare namespace Express {
     type: string
   }
   interface Request {
-    user?: User
+    user: User
     member?: import('../../src/entity/Member').Member
+    session?: {
+      id: number
+    }
   }
 }
