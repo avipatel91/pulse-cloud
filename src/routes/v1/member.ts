@@ -3,7 +3,6 @@ import { getRepository, createQueryBuilder } from 'typeorm'
 import wrapAsync from '../../utils/wrapAsync'
 import { ForbiddenError, BadRequestError } from '../../common/Errors'
 import { Session } from '../../entity/Session'
-import { Member } from '../../entity/Member'
 
 const router = express.Router()
 
