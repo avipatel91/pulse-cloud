@@ -10,7 +10,7 @@ const router = express.Router()
 
 const ensureTrainerType: RequestHandler = async (req, res, next) => {
   const type = req.user['type']
-  console.log(type)
+
   if (!type) {
     throw new BadRequestError('Provide user type')
   } else if (type != 'trainer') {
@@ -25,9 +25,6 @@ const ensureTrainerExistence: RequestHandler = async (req, res, next) => {
   const { id } = req.body
   const trainerId = req.params.trainerId
 
-  if (!trainerId) {
-    throw new BadRequestError('Provide trainerID')
-  }
   await trainerRepository.findOneOrFail(trainerId).catch(() => {
     throw new BadRequestError('Trainer does not exist')
   })
@@ -37,17 +34,24 @@ const ensureTrainerExistence: RequestHandler = async (req, res, next) => {
 
 const ensureSessionExistence: RequestHandler = async (req, res, next) => {
   const sessionRepository = getRepository(Session)
-  const sessionId = req.query['id']
+  const sessionId = Number(req.params.sessionId)
   const trainerId = req.params.trainerId
+  const userId = req.user['id']
 
-  if (!sessionId) {
-    throw new BadRequestError('Provide session ID')
+  if (userId != trainerId) {
+    throw new BadRequestError(
+      'User and trainer IDs do not match: User does not have access to delete this session',
+    )
   }
+
   const session = await getConnection()
     .createQueryBuilder()
     .select('session')
     .from(Session, 'session')
-    .where('session.id = :id', { id: sessionId })
+    .where({
+      id: sessionId,
+      trainer: { id: trainerId },
+    })
     .getOne()
   if (!session) {
     throw new BadRequestError('Session does not exist under this trainer')
@@ -97,7 +101,7 @@ const getSessionCodes: RequestHandler = async (req, res) => {
 const deleteSession: RequestHandler = async (req, res) => {
   const sessionRepository = getRepository(Session)
   const trainerId = req.params.trainerId
-  const id = req.query['id']
+  const id = req.params.sessionId
 
   await getConnection()
     .createQueryBuilder()
@@ -121,7 +125,7 @@ router.get('/:trainerId/sessions', [
   wrapAsync(getSessionCodes),
 ])
 
-router.delete('/:trainerId/sessions', [
+router.delete('/:trainerId/sessions/:sessionId', [
   wrapAsync(ensureTrainerType),
   wrapAsync(ensureTrainerExistence),
   wrapAsync(ensureSessionExistence),
